@@ -1,0 +1,8 @@
+wouter    5251     1 15 02:52 ?        00:00:00 /home/wouter/install/VSCode-linux-x64/Code
+wouter    5254  5251  0 02:52 ?        00:00:00 /home/wouter/install/VSCode-linux-x64/Code --type=zygote --no-sandbox
+wouter    5289  5251  5 02:52 ?        00:00:00 /home/wouter/install/VSCode-linux-x64/Code /home/wouter/install/VSCode-linux-x64/resources/app/out/bootstrap --type=SharedProcess
+wouter    5296  5254 57 02:52 ?        00:00:02 /home/wouter/install/VSCode-linux-x64/Code --type=renderer --no-sandbox --lang=en-US --node-integration=true --enable-delegated-renderer --num-raster-threads=4 --gpu-rasterization-msaa-sample-count=8 --content-image-texture-target=3553 --video-image-texture-target=3553 --disable-accelerated-video-decode --disable-webrtc-hw-encoding --disable-gpu-compositing --channel=5251.0.1281180031 --v8-natives-passed-by-fd --v8-snapshot-passed-by-fd
+wouter    5318  5296 14 02:52 ?        00:00:00 /home/wouter/install/VSCode-linux-x64/Code /home/wouter/install/VSCode-linux-x64/resources/app/out/bootstrap --type=pluginHost
+wouter    5328  5296 12 02:52 ?        00:00:00 /home/wouter/install/VSCode-linux-x64/Code /home/wouter/install/VSCode-linux-x64/resources/app/out/bootstrap --type=watcherService
+wouter    5353  5207  0 02:52 pts/1    00:00:00 sh -c ps -ef | grep -i vsc
+wouter    5355  5353  0 02:52 pts/1    00:00:00 grep -i vsc
