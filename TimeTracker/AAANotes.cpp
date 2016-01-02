@@ -1,4 +1,5 @@
- //Fill the TreeView's model
+    //How to call the treeview model
+
     row = *(m_refTreeModel->append());
     row[m_Columns.m_col_id] = 1;
     row[m_Columns.m_col_percentage] = 15;
