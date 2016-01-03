@@ -184,15 +184,15 @@
         Gtk::MessageDialog dlg("Help", false,
                 Gtk::MESSAGE_INFO, Gtk::BUTTONS_OK, true);
         dlg.set_title("Help Dialog");
-        dlg.set_secondary_text("Add items to your TODO list by writing the task in the entry box, and then press Ctrl+S or button Add. ");
+        dlg.set_secondary_text("wouterv.com 2015-2016");
         dlg.run();
     }
 
     bool MainWindow::check_running(std::string code)
     {
         int counter = 0;
-        ///////////////////////////////////////////////////////////////////////////////////////
-        typedef Gtk::TreeModel::Children type_children; //minimise code length.
+
+        typedef Gtk::TreeModel::Children type_children;
         type_children children = m_refTreeModel->children();
 
         for(auto iter = children.begin();  iter != children.end(); ++iter){
