@@ -5,6 +5,8 @@
 #include <gtkmm/entry.h>
 #include <gtkmm/window.h>
 #include <gtkmm.h>
+#include <stdio.h>
+#include <curl/curl.h>
 
 class HelloWorld : public Gtk::Window
 {
@@ -16,6 +18,11 @@ public:
 protected:
   //Signal handlers:
   void on_button_clicked();
+
+  //methods
+  size_t write_data(void, size_t , size_t , FILE );
+  int get_json(std::string);
+  int get_image(std::string);
 
   //Member widgets:
   Gtk::Button button_download;

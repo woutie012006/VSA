@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <curl/curl.h>
-#include <string>
+#include <iostream>
+#include <cstring>
 
 size_t write_data(void *ptr, size_t size, size_t nmemb, FILE *stream) {
     size_t written = fwrite(ptr, size, nmemb, stream);
@@ -11,8 +12,18 @@ int main(void) {
     CURL *curl;
     FILE *fp;
     CURLcode res;
-    char *url = "http://google.com/index.html";
-    char outfilename[FILENAME_MAX] = "./test.html";
+
+    char *url = "http://media.giphy.com/media/QwUvfDemn0bK0/giphy.gif";
+    std::string str = url;
+    std::cout << "Splitting: " << str << '\n';
+
+    std::size_t found = str.find_last_of("/");
+    std::cout << " path: " << str.substr(0,found) << '\n';
+    std::cout << " file: " << str.substr(found+1) << '\n';
+    str = str.substr(found+1);
+
+    char outfilename[FILENAME_MAX];
+    strcpy(outfilename, str.c_str());
     curl = curl_easy_init();
     if (curl) {
         fp = fopen(outfilename,"wb");

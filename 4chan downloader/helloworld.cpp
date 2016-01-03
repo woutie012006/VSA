@@ -64,13 +64,17 @@ void HelloWorld::on_button_clicked()
   std::string thread = txt_thread.get_text();
 
   std::cout << board <<"-" << thread<<std::endl;
-  std::string JsonLink = "http://a.4cdn.org/" + board + "/" + thread + "/threadnumber.json"
+  std::string JsonLink = "http://a.4cdn.org/" + board + "/" + thread + "/threadnumber.json";
   get_file(JsonLink);
-  
+
 
 }
+size_t write_data(void *ptr, size_t size, size_t nmemb, FILE *stream) {
+    size_t written = fwrite(ptr, size, nmemb, stream);
+    return written;
+}
 
-int get_file(std::string file_url) {
+int get_json(std::string file_url) {
 
     CURL *curl;
     FILE *fp;
@@ -90,8 +94,33 @@ int get_file(std::string file_url) {
     }
     return 0;
 }
+int get_image(std::string file_url) {
 
-size_t write_data(void *ptr, size_t size, size_t nmemb, FILE *stream) {
-    size_t written = fwrite(ptr, size, nmemb, stream);
-    return written;
+  CURL *curl;
+  FILE *fp;
+  CURLcode res;
+
+  char *url = file_url;
+  std::string str = url;
+  std::cout << "Splitting: " << str << '\n';
+
+  std::size_t found = str.find_last_of("/");
+  std::cout << " path: " << str.substr(0,found) << '\n';
+  std::cout << " file: " << str.substr(found+1) << '\n';
+  str = str.substr(found+1);
+
+  char outfilename[FILENAME_MAX];
+  strcpy(outfilename, str.c_str());
+  curl = curl_easy_init();
+  if (curl) {
+      fp = fopen(outfilename,"wb");
+      curl_easy_setopt(curl, CURLOPT_URL, url);
+      curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_data);
+      curl_easy_setopt(curl, CURLOPT_WRITEDATA, fp);
+      res = curl_easy_perform(curl);
+      /* always cleanup */
+      curl_easy_cleanup(curl);
+      fclose(fp);
+  }
+    return 0;
 }
