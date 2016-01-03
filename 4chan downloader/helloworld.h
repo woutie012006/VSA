@@ -7,6 +7,10 @@
 #include <gtkmm.h>
 #include <stdio.h>
 #include <curl/curl.h>
+#include <stdio.h>
+#include <curl/curl.h>
+#include <iostream>
+#include <cstring>
 
 class HelloWorld : public Gtk::Window
 {
@@ -20,9 +24,9 @@ protected:
   void on_button_clicked();
 
   //methods
-  size_t write_data(void, size_t , size_t , FILE );
   int get_json(std::string);
   int get_image(std::string);
+  static size_t write_data(void *ptr, size_t size, size_t nmemb, FILE *stream) ;
 
   //Member widgets:
   Gtk::Button button_download;

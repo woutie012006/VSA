@@ -9,6 +9,7 @@
 #include <gtkmm.h>
 #include <stdio.h>
 #include <curl/curl.h>
+#include <cstring>
 
 HelloWorld::HelloWorld()
 :   m_box(Gtk::ORIENTATION_VERTICAL),
@@ -64,23 +65,19 @@ void HelloWorld::on_button_clicked()
   std::string thread = txt_thread.get_text();
 
   std::cout << board <<"-" << thread<<std::endl;
-  std::string JsonLink = "http://a.4cdn.org/" + board + "/" + thread + "/threadnumber.json";
-  get_file(JsonLink);
+  std::string JsonLink = "http://a.4cdn.org/" + board + "/thread/" + thread + ".json";
+  std::cout <<"JsonLink:"<<JsonLink << std::endl;
+  get_json(JsonLink);
 
 
 }
-size_t write_data(void *ptr, size_t size, size_t nmemb, FILE *stream) {
-    size_t written = fwrite(ptr, size, nmemb, stream);
-    return written;
-}
-
-int get_json(std::string file_url) {
+int HelloWorld::get_json(std::string file_url) {
 
     CURL *curl;
     FILE *fp;
     CURLcode res;
-    char *url = file_url;
-    char outfilename[FILENAME_MAX] = "./test.html";
+    char *url = const_cast<char*>(file_url.c_str());
+    char outfilename[FILENAME_MAX] = "./test.json";
     curl = curl_easy_init();
     if (curl) {
         fp = fopen(outfilename,"wb");
@@ -94,13 +91,13 @@ int get_json(std::string file_url) {
     }
     return 0;
 }
-int get_image(std::string file_url) {
+int HelloWorld::get_image(std::string file_url) {
 
   CURL *curl;
   FILE *fp;
   CURLcode res;
 
-  char *url = file_url;
+  char *url = const_cast<char*>(file_url.c_str());
   std::string str = url;
   std::cout << "Splitting: " << str << '\n';
 
@@ -123,4 +120,8 @@ int get_image(std::string file_url) {
       fclose(fp);
   }
     return 0;
+}
+size_t HelloWorld::write_data(void *ptr, size_t size, size_t nmemb, FILE *stream) {
+    size_t written = fwrite(ptr, size, nmemb, stream);
+    return written;
 }
