@@ -17,7 +17,7 @@
     //m_HScale(m_adjustment, Gtk::ORIENTATION_HORIZONTAL)
     {
 
-      std::thread t1(check_running);
+      //std::thread t1(check_running);
 
     set_title("Time Tracker");
     set_default_size(800, 400);
@@ -43,18 +43,23 @@
         h2_Box.pack_start(*txt_description, true, true, 5);
 
         //add Entry button
-        b_add->signal_clicked().connect(sigc::mem_fun(*this, &MainWindow::on_addEntry_clicked));
-        h2_Box.pack_start(*b_add, false, true, 5);
+        btn_add->signal_clicked().connect(sigc::mem_fun(*this, &MainWindow::on_addEntry_clicked));
+        h2_Box.pack_start(*btn_add, false, true, 5);
 
         Glib::ustring someTask = "some task";
         //add Button which saves editing
-        b_saveEdit->signal_clicked().connect(sigc::mem_fun(*this, &MainWindow::onSaveEdit_clicked));
-        b_saveEdit->set_sensitive(false);
-        h2_Box.pack_start(*b_saveEdit, false, true, 5);
+        btn_saveEdit->signal_clicked().connect(sigc::mem_fun(*this, &MainWindow::onSaveEdit_clicked));
+        btn_saveEdit->set_sensitive(false);
+        h2_Box.pack_start(*btn_saveEdit, false, true, 5);
 
-        b_delete->signal_clicked().connect(sigc::mem_fun(*this, &MainWindow::on_delete_clicked));
-        b_delete->set_sensitive(false);
-        h2_Box.pack_start(*b_delete, false, true, 5);
+        btn_delete->signal_clicked().connect(sigc::mem_fun(*this, &MainWindow::on_delete_clicked));
+        btn_delete->set_sensitive(false);
+        h2_Box.pack_start(*btn_delete, false, true, 5);
+
+        //add check running button
+        btn_check->signal_clicked().connect(sigc::mem_fun(*this, &MainWindow::check_running));
+        h2_Box.pack_start(*btn_check, false, true, 5);
+
 
         //Add the TreeView, inside a ScrolledWindow:
         m_ScrolledWindow.add(m_TreeView);
@@ -124,8 +129,8 @@
     {
         any_row_selected = true;
 
-        b_saveEdit->set_sensitive(true);
-        b_delete->set_sensitive(true);
+        btn_saveEdit->set_sensitive(true);
+        btn_delete->set_sensitive(true);
 
         Gtk::TreeModel::iterator iter = m_refTreeSelection->get_selected();
         Gtk::TreeModel::Row row = *iter;
@@ -139,7 +144,7 @@
 
     void MainWindow::onSaveEdit_clicked()
     {
-        b_saveEdit->set_sensitive(false);
+        btn_saveEdit->set_sensitive(false);
 
         Gtk::TreeModel::iterator iter = m_refTreeSelection->get_selected();
         Gtk::TreeModel::Row row = *iter;
@@ -163,10 +168,10 @@
 
     void MainWindow::on_text_changed()
     {
-        bool is_button_active = b_saveEdit->get_sensitive();
+        bool is_button_active = btn_saveEdit->get_sensitive();
 
         if(any_row_selected && !is_button_active) {
-            b_saveEdit->set_sensitive(true);
+            btn_saveEdit->set_sensitive(true);
         }
 
         std::cout << "text has changed" << std::endl;
@@ -174,26 +179,28 @@
 
     void MainWindow::on_scale_changed()
     {
-        bool is_button_active = b_saveEdit->get_sensitive();
+        bool is_button_active = btn_saveEdit->get_sensitive();
 
         if(any_row_selected && !is_button_active) {
-        b_saveEdit->set_sensitive(true);
+        btn_saveEdit->set_sensitive(true);
         }
     }
 
     void MainWindow::check_running()
     {
+
       int counter = 0;
-      while(true){
+      //while(true){
 
 
-        typedef Gtk::TreeModel::Children type_children;
-        type_children children = m_refTreeModel->children();
+      typedef Gtk::TreeModel::Children type_children;
+      type_children children = m_refTreeModel->children();
 
-        for(auto iter = children.begin();  iter != children.end(); ++iter){
+      for(auto iter = children.begin();  iter != children.end(); ++iter){
 
           Gtk::TreeModel::Row row = *iter;//dereferencing it so i can actually use it and not the pointer
-          //counter = row[m_Columns.m_col_time];//////////////////////
+          counter = row[m_Columns.m_col_time];//////////////////////
+          std::cout << "counter start of loop :"<<counter << std::endl;
           Glib::ustring code = row.get_value(m_Columns.m_col_code);
 
 
@@ -228,6 +235,7 @@
             for (i = 0; std::getline(f, line); ++i);
             f.close();
 
+            std::cout << "counter before counting lines :"<<counter << std::endl;
             bool running=false;
             //this needs to be higher than 2 because  grep spawns a new command
             if(i>2){
@@ -236,11 +244,10 @@
             //    running = false; //redundant
                 ++counter;
             }
-
+            std::cout << "counter after counting lines :"<<counter << std::endl;
             row[m_Columns.m_col_time] =counter ;
 
       }
-      sleep(1);
-    }
+    // }
 
 }

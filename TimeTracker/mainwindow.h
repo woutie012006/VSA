@@ -22,9 +22,10 @@ public:
     Gtk::Grid *grid = Gtk::manage(new Gtk::Grid);
     Gtk::Entry *txt_description = Gtk::manage(new Gtk::Entry());
     Gtk::Entry *txt_code = Gtk::manage(new Gtk::Entry());
-    Gtk::Button *b_add = Gtk::manage(new Gtk::Button("Add New Task"));
-    Gtk::Button *b_saveEdit = Gtk::manage(new Gtk::Button("Save Edit"));
-    Gtk::Button *b_delete = Gtk::manage(new Gtk::Button("Delete Task"));
+    Gtk::Button *btn_add = Gtk::manage(new Gtk::Button("Add New Task"));
+    Gtk::Button *btn_saveEdit = Gtk::manage(new Gtk::Button("Save Edit"));
+    Gtk::Button *btn_delete = Gtk::manage(new Gtk::Button("Delete Task"));
+    Gtk::Button *btn_check = Gtk::manage(new Gtk::Button("Check Running"));
     Gtk::TreeViewColumn* pColumn = Gtk::manage(new Gtk::TreeViewColumn);
     Glib::RefPtr<Gtk::AccelGroup> group = Gtk::AccelGroup::create();
     Glib::RefPtr<Gtk::Adjustment> m_adjustment;
@@ -39,7 +40,7 @@ protected:
   void on_delete_clicked();
   void on_text_changed();
   void on_scale_changed();
-
+  void onRefresh_clicked();
   //Methods
   void check_running();
 

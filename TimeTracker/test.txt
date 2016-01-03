@@ -1,2 +1,9 @@
-wouter    3355  3247  0 17:37 pts/0    00:00:00 sh -c ps -ef | grep -i blabal
-wouter    3357  3355  0 17:37 pts/0    00:00:00 grep -i blabal
+wouter    5275     1  6 21:49 ?        00:00:01 /home/wouter/install/VSCode-linux-x64/Code
+wouter    5278  5275  0 21:49 ?        00:00:00 /home/wouter/install/VSCode-linux-x64/Code --type=zygote --no-sandbox
+wouter    5313  5275  1 21:49 ?        00:00:00 /home/wouter/install/VSCode-linux-x64/Code /home/wouter/install/VSCode-linux-x64/resources/app/out/bootstrap --type=SharedProcess
+wouter    5323  5278 19 21:49 ?        00:00:04 /home/wouter/install/VSCode-linux-x64/Code --type=renderer --no-sandbox --lang=en-US --node-integration=true --enable-delegated-renderer --num-raster-threads=4 --gpu-rasterization-msaa-sample-count=8 --content-image-texture-target=3553 --video-image-texture-target=3553 --disable-accelerated-video-decode --disable-webrtc-hw-encoding --disable-gpu-compositing --channel=5275.0.1478753579 --v8-natives-passed-by-fd --v8-snapshot-passed-by-fd
+wouter    5344  5323  2 21:49 ?        00:00:00 /home/wouter/install/VSCode-linux-x64/Code /home/wouter/install/VSCode-linux-x64/resources/app/out/bootstrap --type=pluginHost
+wouter    5355  5323  1 21:49 ?        00:00:00 /home/wouter/install/VSCode-linux-x64/Code /home/wouter/install/VSCode-linux-x64/resources/app/out/bootstrap --type=watcherService
+wouter    5366  5323  1 21:49 ?        00:00:00 /home/wouter/install/VSCode-linux-x64/Code /home/wouter/install/VSCode-linux-x64/resources/app/out/bootstrap git /home/wouter/Projects/VSA/TimeTracker utf8 /home/wouter/install/VSCode-linux-x64/Code
+wouter    5442  5232  0 21:49 pts/1    00:00:00 sh -c ps -ef | grep -i vsc
+wouter    5444  5442  0 21:49 pts/1    00:00:00 grep -i vsc
