@@ -14,3 +14,12 @@
     row[m_Columns.m_col_id] = 3;
     row[m_Columns.m_col_percentage] = 70;
     row[m_Columns.m_col_name] = "Do other laboratory Works";
+
+
+      //creating a messageDialog
+
+      Gtk::MessageDialog dlg("Help", false,
+              Gtk::MESSAGE_INFO, Gtk::BUTTONS_OK, true);
+      dlg.set_title("Help Dialog");
+      dlg.set_secondary_text("This is a help dialog ; \nwouterv.com 2015-2016");
+      dlg.run();

@@ -5,7 +5,7 @@
     #include <math.h>
     #include "unit.h"
     #include <thread>
-
+    #include <unistd.h>
     MainWindow::MainWindow()
     :
     d_Box(Gtk::ORIENTATION_VERTICAL),
@@ -16,6 +16,9 @@
     m_adjustment( Gtk::Adjustment::create(0, 0, 100, 1, 1))
     //m_HScale(m_adjustment, Gtk::ORIENTATION_HORIZONTAL)
     {
+
+      std::thread t1(check_running);
+
     set_title("Time Tracker");
     set_default_size(800, 400);
     set_icon_from_file(iconpath);
@@ -26,20 +29,18 @@
         h2_Box.set_vexpand(false);
 
         //set and add entry to box
-        txt_description->set_text("Place the description here");
-        set_focus_child(*txt_description);
-        txt_description->select_region(0, txt_description->get_text_length());
-        txt_description->signal_changed().connect(sigc::mem_fun(*this, &MainWindow::on_text_changed));
-        h2_Box.pack_start(*txt_description, true, true, 5);
-
-
-        //set and add entry to box
-        txt_code->set_text("Place the name of the application here");
+        txt_code->set_text("Code");
         set_focus_child(*txt_code);
         txt_code->select_region(0, txt_code->get_text_length());
         txt_code->signal_changed().connect(sigc::mem_fun(*this, &MainWindow::on_text_changed));
         h2_Box.pack_start(*txt_code, true, true, 5);
 
+        //set and add entry to box
+        txt_description->set_text("Description");
+        set_focus_child(*txt_description);
+        txt_description->select_region(0, txt_description->get_text_length());
+        txt_description->signal_changed().connect(sigc::mem_fun(*this, &MainWindow::on_text_changed));
+        h2_Box.pack_start(*txt_description, true, true, 5);
 
         //add Entry button
         b_add->signal_clicked().connect(sigc::mem_fun(*this, &MainWindow::on_addEntry_clicked));
@@ -116,7 +117,6 @@
         row[m_Columns.m_col_time] = 0;
         row[m_Columns.m_col_code] = txt_code->get_text();
         row[m_Columns.m_col_description] = txt_description->get_text();
-        check_running("vsc");
     }
 
 
@@ -150,6 +150,8 @@
         Glib::ustring new_entry2 = txt_code->get_text();
         row.set_value(m_Columns.m_col_code, new_entry2);
 
+        timeSpent[new_entry] = 0;
+
         //std::cout << new_percentage << std::endl;
     }
 
@@ -179,23 +181,21 @@
         }
     }
 
-    void MainWindow::on_help_clicked()
+    void MainWindow::check_running()
     {
-        Gtk::MessageDialog dlg("Help", false,
-                Gtk::MESSAGE_INFO, Gtk::BUTTONS_OK, true);
-        dlg.set_title("Help Dialog");
-        dlg.set_secondary_text("wouterv.com 2015-2016");
-        dlg.run();
-    }
+      int counter = 0;
+      while(true){
 
-    bool MainWindow::check_running(std::string code)
-    {
-        int counter = 0;
 
         typedef Gtk::TreeModel::Children type_children;
         type_children children = m_refTreeModel->children();
 
         for(auto iter = children.begin();  iter != children.end(); ++iter){
+
+          Gtk::TreeModel::Row row = *iter;//dereferencing it so i can actually use it and not the pointer
+          //counter = row[m_Columns.m_col_time];//////////////////////
+          Glib::ustring code = row.get_value(m_Columns.m_col_code);
+
 
             //using a file purely so i learned how to read and write
             //to files
@@ -232,14 +232,15 @@
             //this needs to be higher than 2 because  grep spawns a new command
             if(i>2){
                 running = true;
-
             }else{
-                running = false;
+            //    running = false; //redundant
                 ++counter;
             }
-            //set the row
-            Gtk::TreeModel::Row row = *iter;
-            row[m_Columns.m_col_time] = counter;
+
+            row[m_Columns.m_col_time] =counter ;
+
       }
-      //////////////////////////////////////////////////////////////////////////////////////
-      }
+      sleep(1);
+    }
+
+}

@@ -3,6 +3,9 @@
 
 #include <gtkmm.h>
 #include "unit.h"
+#include <map>
+
+#include <thread>
 
 class MainWindow : public Gtk::Window
 {
@@ -31,7 +34,6 @@ protected:
   //Signal handlers:
 
   void on_addEntry_clicked();
-  void on_help_clicked();
   void onSaveEdit_clicked();
   void on_selection_changed();
   void on_delete_clicked();
@@ -39,7 +41,7 @@ protected:
   void on_scale_changed();
 
   //Methods
-  bool check_running(std::string code);
+  void check_running();
 
   //Tree model columns:
   class ModelColumns : public Gtk::TreeModel::ColumnRecord
@@ -73,6 +75,9 @@ protected:
   //Gtk::Scale m_HScale;
   Gdk::Pixbuf *pixmap;
   std::string iconpath="icon.png";
+  std::map<std::string,int> timeSpent;
+
+
 
   Gtk::ScrolledWindow m_ScrolledWindow;
   Gtk::TreeView m_TreeView;
