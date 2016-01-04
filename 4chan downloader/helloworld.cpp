@@ -1,7 +1,6 @@
 #include "helloworld.h"
 #include <iostream>
 #include <gtkmm/stock.h>
-#include <iostream>
 #include <fstream>
 #include <math.h>
 #include <thread>
@@ -10,6 +9,7 @@
 #include <stdio.h>
 #include <curl/curl.h>
 #include <cstring>
+#include "rapidjson/document.h"
 
 HelloWorld::HelloWorld()
 :   m_box(Gtk::ORIENTATION_VERTICAL),
