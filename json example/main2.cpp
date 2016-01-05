@@ -23,3 +23,5 @@ int main() {
     std::cout << buffer.GetString() << std::endl;
     return 0;
 }
+//this file is purely made to check if the standard example compiles with rapidJson
+//and check if the library is properly accesed
