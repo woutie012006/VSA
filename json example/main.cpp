@@ -11,7 +11,6 @@
 #include <curl/curl.h>
 #include <cstring>
 #include "rapidjson/document.h"
-#include <string>
 #include <fstream>
 
 using namespace rapidjson;
@@ -43,7 +42,7 @@ int get_json(std::string file_url) {
     return 0;
 }
 
-int get_image(std::string board,  std::string tim,  std::string ext) {
+int get_image(std::string board,  std::string tim,  std::string ext, std::string filename) {
 
   CURL *curl;
   FILE *fp;
@@ -71,7 +70,7 @@ int get_image(std::string board,  std::string tim,  std::string ext) {
        fclose(fp);
    }
    char oldname[] ="testfile";
-   std::string new_name= tim + ext;
+   std::string new_name= "./test/"+filename + ext;
 
    char new_file_name[100];
    for (int i=0;i<=new_name.size();i++)
@@ -83,54 +82,35 @@ int get_image(std::string board,  std::string tim,  std::string ext) {
     return 0;
 }
 
-// void parse_json(){
-//
-//
-//
-//
-//
-//
-//    std::string line,text;
-//    std::ifstream in("./test.json");
-//    while(std::getline(in, line))
-//    {
-//        text += line + "\n";
-//    }
-//    const char* json[] = "{ \"hello\" : \"world\" }";
-//    //const char* json = text.c_str();
-//
-//   Document document;
-//   document.Parse(json);
-//
-//   const Value& a = document["hello"];
-//
-//   for (rapidjson::SizeType i = 0; i < a.Size(); i++)
-//      {
-//          const Value& c = a[i];
-//
-//          printf("%s \n",c["no"].GetString());
-//      }
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-// }
+void parse_json(std::string board){
+
+  system("mkdir ./test/");
+
+
+   std::string line,text;
+   std::ifstream in("./test.json");
+   while(std::getline(in, line))
+   {
+       text += line + "\n";
+   }
+
+  Document document;
+  document.Parse<0>(text.c_str());
+
+  Value& post = document["posts"];
+  std::string tim;
+  for (SizeType i = 0; i < post.Size(); i++) {
+    if(post[i].HasMember("filename")){
+
+      std::cout << "now getting image" << std::endl;
+      tim = std::to_string(post[i]["tim"].GetDouble());
+      tim = tim.substr(0, tim.find("."));
+      get_image(board, tim, post[i]["ext"].GetString(), post[i]["filename"].GetString());
+    }
+  }
+
+
+}
 
 
 
@@ -138,10 +118,10 @@ int get_image(std::string board,  std::string tim,  std::string ext) {
 
 int main() {
   std::string board = "wg";
-  std::string thread = "6424505";
+  std::string thread = "6431912";
   std::string json_link = "http://a.4cdn.org/" + board + "/thread/" + thread + ".json";
-  //get_json(json_link);
-  get_image("wg",  "1449884662622", ".jpg" );
-  //parse_json();
+  get_json(json_link);
+  //get_image("wg",  "1449884662622", ".jpg" );
+  parse_json("wg");
   return 0;
 }
