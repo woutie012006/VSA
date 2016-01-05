@@ -26,6 +26,7 @@ protected:
   //methods
   int get_json(std::string);
   int get_image(std::string);
+  void parse_json();
   static size_t write_data(void *ptr, size_t size, size_t nmemb, FILE *stream) ;
 
   //Member widgets:

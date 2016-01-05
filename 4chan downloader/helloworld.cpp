@@ -10,6 +10,8 @@
 #include <curl/curl.h>
 #include <cstring>
 #include "rapidjson/document.h"
+#include <string>
+#include <fstream>
 
 HelloWorld::HelloWorld()
 :   m_box(Gtk::ORIENTATION_VERTICAL),
@@ -91,22 +93,17 @@ int HelloWorld::get_json(std::string file_url) {
     }
     return 0;
 }
-int HelloWorld::get_image(std::string file_url) {
+
+int HelloWorld::get_image(std::string board,  std::tim,  std::string ext, std::string local_url) {
 
   CURL *curl;
   FILE *fp;
   CURLcode res;
+  std::string web_url = "http://i.4cdn.org/" +board"/"+tim + ext;
 
-  char *url = const_cast<char*>(file_url.c_str());
-  std::string str = url;
-  std::cout << "Splitting: " << str << '\n';
+  char *url = const_cast<char*>(web_url.c_str());
 
-  std::size_t found = str.find_last_of("/");
-  std::cout << " path: " << str.substr(0,found) << '\n';
-  std::cout << " file: " << str.substr(found+1) << '\n';
-  str = str.substr(found+1);
-
-  char outfilename[FILENAME_MAX];
+  char outfilename[FILENAME_MAX] = "./" + local_url;
   strcpy(outfilename, str.c_str());
   curl = curl_easy_init();
   if (curl) {
@@ -124,4 +121,18 @@ int HelloWorld::get_image(std::string file_url) {
 size_t HelloWorld::write_data(void *ptr, size_t size, size_t nmemb, FILE *stream) {
     size_t written = fwrite(ptr, size, nmemb, stream);
     return written;
+}
+void HelloWorld::parse_json(){
+
+   std::string line,text;
+   std::ifstream in("./test.json");
+   while(std::getline(in, line))
+   {
+       text += line + "\n";
+   }
+   const char* json = text.c_str();
+
+  Document document;
+  document.Parse(json);
+
 }
