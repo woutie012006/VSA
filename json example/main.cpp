@@ -116,12 +116,15 @@ void parse_json(std::string board){
 
 
 
-int main() {
+int main(int argc,      // Number of strings in array argv
+          char *argv[],   // Array of command-line argument strings
+          char *envp[] )  // Array of environment variable strings)
+  {
   std::string board = "wg";
-  std::string thread = "6431912";
+  std::string thread = "6431983";
   std::string json_link = "http://a.4cdn.org/" + board + "/thread/" + thread + ".json";
   get_json(json_link);
   //get_image("wg",  "1449884662622", ".jpg" );
-  parse_json("wg");
+  parse_json(board);
   return 0;
 }

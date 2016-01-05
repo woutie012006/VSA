@@ -11,6 +11,7 @@
 #include <curl/curl.h>
 #include <iostream>
 #include <cstring>
+#include <string>
 
 class HelloWorld : public Gtk::Window
 {
@@ -24,9 +25,9 @@ protected:
   void on_button_clicked();
 
   //methods
-  int get_json(std::string);
-  int get_image(std::string);
-  void parse_json();
+  void get_json(std::string);
+  void get_image(std::string,  std::string,  std::string, std::string);
+  void parse_json(std::string);
   static size_t write_data(void *ptr, size_t size, size_t nmemb, FILE *stream) ;
 
   //Member widgets:
