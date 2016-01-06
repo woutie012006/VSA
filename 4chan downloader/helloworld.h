@@ -26,10 +26,10 @@ protected:
 
   //methods
   void get_json(std::string);
-  void get_image(std::string,  std::string,  std::string, std::string);
+  void get_image(std::string,  std::string,  std::string, std::string,std::string);
   void parse_json(std::string);
   static size_t write_data(void *ptr, size_t size, size_t nmemb, FILE *stream) ;
-
+  std::string RemoveSpecialCharacters(std::string);
   //Member widgets:
   Gtk::Button button_download;
   Gtk::Entry txt_board;

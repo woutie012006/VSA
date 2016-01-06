@@ -9,8 +9,8 @@
 #include <stdio.h>
 #include <curl/curl.h>
 #include <cstring>
-#include "rapidjson/document.h"
 #include <string>
+#include "rapidjson/document.h"
 #include <fstream>
 #include <stdio.h>
 #include <cstdio>
@@ -76,6 +76,7 @@ void HelloWorld::on_button_clicked()
   std::string JsonLink = "http://a.4cdn.org/" + board + "/thread/" + thread + ".json";
   std::cout <<"JsonLink:"<<JsonLink << std::endl;
   get_json(JsonLink);
+  parse_json(board);
 }
 
 
@@ -102,7 +103,7 @@ void HelloWorld::get_json(std::string file_url) {
 
 
 
-void HelloWorld::get_image(std::string board,  std::string tim,  std::string ext, std::string filename) {
+void HelloWorld::get_image(std::string board,  std::string tim,  std::string ext, std::string filename, std::string folder) {
 
   CURL *curl;
   FILE *fp;
@@ -110,10 +111,8 @@ void HelloWorld::get_image(std::string board,  std::string tim,  std::string ext
 
   std::string web_url = "http://i.4cdn.org/" +board+"/"+tim + ext;
   std::cout<<web_url<<std::endl;
-  std::string local_url;
   char *url = const_cast<char*>(web_url.c_str());
 
-  local_url ="./"+tim + ext;
   char outfilename[FILENAME_MAX] =  "testfile";
 
    curl = curl_easy_init();
@@ -127,7 +126,7 @@ void HelloWorld::get_image(std::string board,  std::string tim,  std::string ext
        fclose(fp);
    }
    char oldname[] ="testfile";
-   std::string new_name= "./test/"+filename + ext;
+   std::string new_name= "./"+folder+"/"+filename + ext;
 
    char new_file_name[100];
    for (int i=0;i<=new_name.size();i++)
@@ -159,8 +158,10 @@ void HelloWorld::parse_json(std::string board){
 
   rapidjson::Value& post = document["posts"];
   std::string tim;
+  int k =0;
+   std::string temp = RemoveSpecialCharacters(post[k]["sub"].GetString());
 
-  system("mkdir ./" + post[0]["sub"] + "/");
+  system(("mkdir ./" + temp + "/").c_str());
 
   for (SizeType i = 0; i < post.Size(); i++) {
     if(post[i].HasMember("filename")){
@@ -168,9 +169,20 @@ void HelloWorld::parse_json(std::string board){
       std::cout << "now getting image" << std::endl;
       tim = std::to_string(post[i]["tim"].GetDouble());
       tim = tim.substr(0, tim.find("."));
-      get_image(board, tim, post[i]["ext"].GetString(), post[i]["filename"].GetString());
+      get_image(board, tim, post[i]["ext"].GetString(), post[i]["filename"].GetString(), temp);
     }
   }
 
 
+}
+
+std::string HelloWorld::RemoveSpecialCharacters(std::string str) {
+   std::string s;
+   for (char & c : str) {
+      if ((c >= '0' && c <= '9') || (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || c == '.' || c == '_') {
+
+         s.push_back(c);
+      }
+   }
+   return s;
 }
