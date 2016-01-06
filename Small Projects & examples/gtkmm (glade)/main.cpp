@@ -12,13 +12,13 @@ static
 void on_button_clicked()
 {
   if(pDialog)
-    cout<<"fuck";
-    pDialog->hide(); //hide() will cause main::run() to end.    
+    cout<<"Hello there";
+    pDialog->hide(); //hide() will cause main::run() to end.
 }
 void on_button2_clicked()
 {
-    cout<<"fuck-"<<endl;
-    
+    cout<<"Button 2 Clicked-"<<endl;
+
    ofstream outputFile;
     outputFile.open("test.txt", fstream::in | fstream::out | fstream::app);
     outputFile<<textview->get_buffer()->get_text()<<endl;
@@ -28,10 +28,10 @@ void on_button2_clicked()
 
 void on_button3_clicked()
 {
-    cout<<"fuck-"<<endl;    
-    ofstream outputFile;  
+    cout<<"Button3 clicked-"<<endl;
+    ofstream outputFile;
     outputFile.open("test.txt");
-    
+
     FILE *fp;
     char path[1035];
 
@@ -48,21 +48,21 @@ void on_button3_clicked()
     }
      /* close */
     pclose(fp);
-    outputFile.close(); 
-       
+    outputFile.close();
+
     //opens test.txt and reads the amount of lines
     ifstream f("test.txt");
     string line;
     int i=0;
     for (i = 0; std::getline(f, line); ++i);
     if(i>2){
-        cout<<"fuck me m8---"<<i<<endl;
+        cout<<"it's running"<<i<<endl;
     }else{
         cout<<"nooooooo"<<endl;
     }
     f.close();
 
-   
+
 
 }
 
@@ -76,14 +76,14 @@ void on_button3_clicked()
 
 int main (int argc, char **argv)
 {
-    
+
     Person p(10);
     cout<<p.get_id()<<endl;
-    
-    
-    
-    
-    
+
+
+
+
+
   cout <<endl<< endl<< argc <<"----" << **argv <<endl;
   auto app = Gtk::Application::create(argc, argv, "org.gtkmm.example");
 
@@ -128,8 +128,8 @@ int main (int argc, char **argv)
       p2Button->signal_clicked().connect( sigc::ptr_fun(on_button3_clicked) );
     }
     refBuilder->get_widget("textview1", textview);
-    
-    
+
+
 
     app->run(*pDialog);
   }
