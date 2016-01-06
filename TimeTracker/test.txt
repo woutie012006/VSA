@@ -1,5 +1,5 @@
-wouter    7461  1241  0 00:58 ?        00:00:01 /usr/share/atom/atom
-wouter    7464  7461  0 00:58 ?        00:00:00 /usr/share/atom/atom --type=zygote --no-sandbox
-wouter    7489  7464  1 00:58 ?        00:00:02 /usr/share/atom/atom --type=renderer --js-flags=--harmony --no-sandbox --lang=en-US --node-integration=true --enable-delegated-renderer --num-raster-threads=4 --gpu-rasterization-msaa-sample-count=8 --content-image-texture-target=3553 --video-image-texture-target=3553 --disable-accelerated-video-decode --disable-webrtc-hw-encoding --disable-gpu-compositing --channel=7461.0.493669308 --v8-natives-passed-by-fd --v8-snapshot-passed-by-fd
-wouter    7858  7770  0 01:01 pts/3    00:00:00 sh -c ps -ef | grep -i Atom
-wouter    7860  7858  0 01:01 pts/3    00:00:00 grep -i Atom
+wouter    8490  1241  2 01:12 ?        00:00:10 /usr/share/atom/atom
+wouter    8494  8490  0 01:12 ?        00:00:00 /usr/share/atom/atom --type=zygote --no-sandbox
+wouter    8848  8494  4 01:15 ?        00:00:12 /usr/share/atom/atom --type=renderer --js-flags=--harmony --no-sandbox --lang=en-US --node-integration=true --enable-delegated-renderer --num-raster-threads=4 --gpu-rasterization-msaa-sample-count=8 --content-image-texture-target=3553 --video-image-texture-target=3553 --disable-accelerated-video-decode --disable-webrtc-hw-encoding --disable-gpu-compositing --channel=8490.3.463866887 --v8-natives-passed-by-fd --v8-snapshot-passed-by-fd
+wouter    9077  9005  0 01:20 pts/1    00:00:00 sh -c ps -ef | grep -i atom
+wouter    9079  9077  0 01:20 pts/1    00:00:00 grep -i atom

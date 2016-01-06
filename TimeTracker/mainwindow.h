@@ -11,10 +11,7 @@ class MainWindow : public Gtk::Window
 {
 public:
   MainWindow();
-  // constants used in dialog responses
-    static const int yes_response = -8;
-    static const int no_response = -9;
-    static const int ok_response = -5;
+
     static const std::vector<Unit> units;
 
     Gtk::Label *topText = Gtk::manage(new Gtk::Label());

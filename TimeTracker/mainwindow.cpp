@@ -100,18 +100,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
     MainWindow::~MainWindow()
     {
     }
@@ -135,11 +123,12 @@
         Gtk::TreeModel::iterator iter = m_refTreeSelection->get_selected();
         Gtk::TreeModel::Row row = *iter;
         //get data from selected row
-        Glib::ustring task_string = row.get_value(m_Columns.m_col_description);
-        std::string selected_percentage = row.get_value(m_Columns.m_col_code);
+        Glib::ustring description = row.get_value(m_Columns.m_col_description);
+        std::string code = row.get_value(m_Columns.m_col_code);
         unsigned int selected_id = row.get_value(m_Columns.m_col_time);
 
-        txt_description->set_text(task_string);
+        txt_description->set_text(description);
+        txt_code->set_text(code);
     }
 
     void MainWindow::onSaveEdit_clicked()
@@ -239,10 +228,8 @@
             bool running=false;
             //this needs to be higher than 2 because  grep spawns a new command
             if(i>2){
+              ++counter;
                 running = true;
-            }else{
-            //    running = false; //redundant
-                ++counter;
             }
             std::cout << "counter after counting lines :"<<counter << std::endl;
             row[m_Columns.m_col_time] =counter ;
