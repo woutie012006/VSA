@@ -159,7 +159,14 @@ void HelloWorld::parse_json(std::string board){
   rapidjson::Value& post = document["posts"];
   std::string tim;
   int k =0;
-   std::string temp = RemoveSpecialCharacters(post[k]["sub"].GetString());
+
+  std::string temp;
+  temp = RemoveSpecialCharacters(post[k]["semantic_url"].GetString());
+  // if(post[k]["sub"].IsString()){
+    // temp = RemoveSpecialCharacters(post[k]["sub"].GetString());
+  // }else{
+  //   temp = RemoveSpecialCharacters(post[k]["com"].GetString());
+  // }
 
   system(("mkdir ./" + temp + "/").c_str());
 
