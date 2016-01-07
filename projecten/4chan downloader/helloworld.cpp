@@ -77,6 +77,7 @@ void HelloWorld::on_button_clicked()
   std::cout <<"JsonLink:"<<JsonLink << std::endl;
   get_json(JsonLink);
   parse_json(board);
+  std::remove("./test.json");
 }
 
 
@@ -135,6 +136,7 @@ void HelloWorld::get_image(std::string board,  std::string tim,  std::string ext
    }
 
    rename( oldname , new_file_name );
+
 
 }
 
